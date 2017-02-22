@@ -17,4 +17,4 @@ script and execute it and transfer the results to a blob storage container. Fina
 
 ## Creating an HDInsight cluster
 1. Open up the **Command Prompt** in windows
-![cmd](/images/cmd.png)
+![alt text](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/cmd.png "Command Prompt")
