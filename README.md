@@ -15,49 +15,50 @@ script and execute it and transfer the results to a blob storage container. Fina
   * [Windows installer](http://aka.ms/webpi-azure-cli)
   * [Mac installer](http://aka.ms/mac-azure-cli)
 2. Once the Azure CLI has finished installing, open up the **Command Prompt**
-![Command Prompt](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/cmd.png "Command Prompt")
+ ![Command Prompt](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/cmd.png "Command Prompt")
 3. To login to azure through the CLI type:
-```
-azure login
-```
- * The output will provide a link and a code to autheticate the user login
- * Follow the link and enter the provided code. The page will look something like this:
+ ```
+ azure login
+ ```
+  * The output will provide a link and a code to autheticate the user login
+  * Follow the link and enter the provided code. The page will look something like this:
  ![CLI auth](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/azure%20cli%20login%202.JPG "azure cli authentication")
- * enter the account login info when prompted
+  * enter the account login info when prompted
 
 4. Switch modes to the Azure Resource Manager:
 
-```
-azure config mode arm
-```
+ ```
+ azure config mode arm
+ ```
 
 5. Create a resource group using the command:
-```
-azure group create groupname location
-```
-* Replace **groupname** and **location** with unique names
-  * Find valid locations using the command *azure location list*
+ ```
+ azure group create groupname location
+ ```
+ * Replace **groupname** and **location** with unique names
+   * Find valid locations using the command ```azure location list```
+   
 6. Create a storage account for the HDInsight cluster
-```
-azure storage account create -g groupname --sku-name RAGRS -l location --kind Storage storagename
-```
-* Replace **groupname** and **location** with the same name as before
-* Replace **storagename** with a specific name
+ ```
+ azure storage account create -g groupname --sku-name RAGRS -l location --kind Storage storagename
+ ```
+ * Replace **groupname** and **location** with the same name as before
+ * Replace **storagename** with a specific name
 7. Get the key required for accessing the storage account
-```
-azure storage account keys list -g groupname storagename
-```
-* The data will output something like this
-![storage keys](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/storage%20keys.JPG "storage keys")
-* Save the **key1** value
+ ```
+ azure storage account keys list -g groupname storagename
+ ```
+ * The data will output something like this
+ ![storage keys](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/storage%20keys.JPG "storage keys")
+ * Save the **key1** value
 
 8. To create a Hadoop HDInsight cluster:
-```
-azure hdinsight cluster create -g groupname -l location -y Linux --clusterType Hadoop --defaultStorageAccountName storagename.blob.core.windows.net --defaultStorageAccountKey storagekey --defaultStorageContainer clustername --workerNodeCount 2 --userName admin --password httppassword --sshUserName sshuser --sshPassword sshuserpassword clustername
-```
-* Replace **groupname** and **storagename** with their respective values
-* Replace **storagekey** with the **key1** value from the previous step
-* Replace **clustername**, **admin**, **httppassword**, **sshuser**, **sshuserpassword**, and **clustername** with unique values for each
+ ```
+ azure hdinsight cluster create -g groupname -l location -y Linux --clusterType Hadoop --defaultStorageAccountName storagename.blob.core.windows.net --defaultStorageAccountKey storagekey --defaultStorageContainer clustername --workerNodeCount 2 --userName admin --password httppassword --sshUserName sshuser --sshPassword sshuserpassword clustername
+ ```
+ * Replace **groupname** and **storagename** with their respective values
+ * Replace **storagekey** with the **key1** value from the previous step
+ * Replace **clustername**, **admin**, **httppassword**, **sshuser**, **sshuserpassword**, and **clustername** with unique values for each
 
 ## Submit a Hive job script to the cluster
 1. Connect with SSH
@@ -86,51 +87,55 @@ azure hdinsight cluster create -g groupname -l location -y Linux --clusterType H
      * Click **Open** to connect
      * Enter the username and password while creating the cluster when prompted
 2. Start the Hive CLI by entering
-```
-hive
-```
+ ```
+ hive
+ ```
+ 
  * In this example, we use a log4j sample file 
-   > Note: this can be found at **example/data/sample.log** in the blob storage container
+  > Note: this can be found at **example/data/sample.log** in the blob storage container
+   
  * Using the CLI, create a new table called **log4jLogs**
    * In case table exists, delete table and file
-   ```
-   DROP TABLE log4jLogs;
-   ```
+    ```
+    DROP TABLE log4jLogs;
+    ```
    * Create external table in Hive. Data remains in original location
-   ```
-   CREATE EXTERNAL TABLE log4jLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string)
-   ```
+    ```
+    CREATE EXTERNAL TABLE log4jLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string)
+    ```
    * Communicate to Hive how rows are formatted. Use space as a delimiter
-   ```
-   ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
-   ```
+    ```
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+    ```
    * Communicate to Hive where data is stored
    
-     > Note: Data is stored as text
-   ```
-   STORED AS TEXTFILE LOCATION 'wasbs:///example/data/';
-   ```
+    > Note: Data is stored as text
+    
+    ```
+    STORED AS TEXTFILE LOCATION 'wasbs:///example/data/';
+    ```
    * Select the number of rows where column t4 contains [ERROR]
-   ```
-   SELECT t4 AS sev, COUNT(*) AS count FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log' GROUP BY t4;
-   ```
+    ```
+    SELECT t4 AS sev, COUNT(*) AS count FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log' GROUP BY t4;
+    ```
    * Create an internal table **errorLogs**
    
-     > Note: To create internal table, remove **EXTERNAL** keyword
+    > Note: To create internal table, remove **EXTERNAL** keyword
      
-     > Note: (ORC) is Optimized Row Columnar. Effective for storing Hive data
-   ```
-   CREATE TABLE IF NOT EXISTS errorLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) STORED AS ORC;
-   ```
+    > Note: (ORC) is Optimized Row Columnar. Effective for storing Hive data
+    
+    ```
+    CREATE TABLE IF NOT EXISTS errorLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) STORED AS ORC;
+    ```
    
    * Select rows from **log4jLogs** that have [ERROR] and add them to the **errorLogs** table
      
-   ```sddd
-   INSERT OVERWRITE TABLE errorLogs SELECT t1, t2, t3, t4, t5, t6, t7 FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log';
-   ```
+    ```
+    INSERT OVERWRITE TABLE errorLogs SELECT t1, t2, t3, t4, t5, t6, t7 FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log';
+    ```
    * To check output, ```SELECT * from errorLogs;``` should output 3 rows. 
 
-   ![]("errorLogs")
+    ![](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/errorLogs.JPG "errorLogs")
      
 
 
