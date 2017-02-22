@@ -59,6 +59,8 @@ script and execute it and transfer the results to a blob storage container. Fina
  * Replace **groupname** and **storagename** with their respective values
  * Replace **storagekey** with the **key1** value from the previous step
  * Replace **clustername**, **admin**, **httppassword**, **sshuser**, **sshuserpassword**, and **clustername** with unique values for each
+ 
+ > Note: This process will take ~10 minutes
 
 ## Submit a Hive job script to the cluster
 1. Connect with SSH
@@ -148,6 +150,7 @@ script and execute it and transfer the results to a blob storage container. Fina
    ```
     * Replace **containername** with the cluster name you came up with earlier
     * Replace **storagename** with the unique storage name from earlier
+    * Replace **output** with a unique folder name for the results
     
          > Note: To point to an Azure blob storage, wasb:// or wasbs:// must be used for the uri
          
@@ -157,6 +160,15 @@ script and execute it and transfer the results to a blob storage container. Fina
    ```
    * This transfers the 3 row Hive result output to the desired location
     
-     
+## Deleting the HDInsight cluster
+ 1. In the Azure CLI, use the following to delete the cluster
+ 
+   ```
+   azure hdinsight cluster delete clustername
+   ```
+    * Replace **clustername** with your unique cluster name
+ 2. Enter your Resource Group name when prompted
+    
+    > Note: This process will take ~10 minutes
      
     
