@@ -1,13 +1,16 @@
 # Submit a Hive job script to HDInsight cluster using CLI
+This is a tutorial that demonstrates how to create an HDInsight cluster using the Azure CLI. It will also show how to submit a hive job 
+script and execute it and transfer the results to a blob storage container. Finally it will demonstrate how to delete the cluster.
 ## Requirements
 * Azure subscription or [trial account](https://azure.microsoft.com/en-us/free/)
 * Windows only: [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 
 ## Introduction
-This is a tutorial that demonstrates how to create an HDInsight cluster using the Azure CLI. It will also show how to submit a hive job 
-script and execute it and transfer the results to a blob storage container. Finally it will demonstrate how to close the HDInsight cluster.
+### What is HDInsight?
 
-## What is HDInsight?
+### What is a cluster?
+
+### What is a Hive job?
 
 ## Creating an HDInsight cluster
 1. Install the Azure CLI
