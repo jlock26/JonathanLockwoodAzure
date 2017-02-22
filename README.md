@@ -7,8 +7,7 @@ script and execute it and transfer the results to a blob storage container. Fina
 
 ## Introduction
 ### What is HDInsight?
-
-### What is a cluster?
+HDInsight is a fully managed open-soure cloud 
 
 ### What is a Hive job?
 
