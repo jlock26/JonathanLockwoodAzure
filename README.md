@@ -96,43 +96,46 @@ script and execute it and transfer the results to a blob storage container. Fina
    
  * Using the CLI, create a new table called **log4jLogs**
    * In case table exists, delete table and file
+    
     ```
-    DROP TABLE log4jLogs;
-    ```
+     DROP TABLE log4jLogs;
+     ```
    * Create external table in Hive. Data remains in original location
-    ```
-    CREATE EXTERNAL TABLE log4jLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string)
-    ```
+     
+     ```
+     CREATE EXTERNAL TABLE log4jLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string)
+     ```
    * Communicate to Hive how rows are formatted. Use space as a delimiter
-    ```
-    ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
-    ```
+    
+     ```
+     ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+     ```
    * Communicate to Hive where data is stored
-   
     > Note: Data is stored as text
     
-    ```
-    STORED AS TEXTFILE LOCATION 'wasbs:///example/data/';
-    ```
+     ```
+     STORED AS TEXTFILE LOCATION 'wasbs:///example/data/';
+     ```
    * Select the number of rows where column t4 contains [ERROR]
-    ```
-    SELECT t4 AS sev, COUNT(*) AS count FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log' GROUP BY t4;
-    ```
-   * Create an internal table **errorLogs**
-   
-    > Note: To create internal table, remove **EXTERNAL** keyword
      
-    > Note: (ORC) is Optimized Row Columnar. Effective for storing Hive data
+     ```
+     SELECT t4 AS sev, COUNT(*) AS count FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log' GROUP BY t4;
+     ```
+   * Create an internal table **errorLogs**  
     
-    ```
-    CREATE TABLE IF NOT EXISTS errorLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) STORED AS ORC;
-    ```
+     > Note: To create internal table, remove **EXTERNAL** keyword
+     
+     > Note: (ORC) is Optimized Row Columnar. Effective for storing Hive data
+    
+     ```
+     CREATE TABLE IF NOT EXISTS errorLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string) STORED AS ORC;
+     ```
    
    * Select rows from **log4jLogs** that have [ERROR] and add them to the **errorLogs** table
      
-    ```
-    INSERT OVERWRITE TABLE errorLogs SELECT t1, t2, t3, t4, t5, t6, t7 FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log';
-    ```
+     ```
+     INSERT OVERWRITE TABLE errorLogs SELECT t1, t2, t3, t4, t5, t6, t7 FROM log4jLogs WHERE t4 = '[ERROR]' AND INPUT__FILE__NAME LIKE '%.log';
+     ```
    * To check output, ```SELECT * from errorLogs;``` should output 3 rows. 
 
     ![](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/errorLogs.JPG "errorLogs")
