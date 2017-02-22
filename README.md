@@ -22,7 +22,7 @@ azure login
 ```
 * The output will provide a link and a code to autheticate the user login
 * Follow the link and enter the provided code. The page will look something like this:
-![alt text]("azure cli authentication")
+![alt text](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/azure%20cli%20login%202.JPG "azure cli authentication")
 * enter the account login info when prompted
 
 4. Switch modes to the Azure Resource Manager:
@@ -46,7 +46,7 @@ azure storage account create -g groupname --sku-name RAGRS -l location --kind St
 azure storage account keys list -g groupname storagename
 ```
 * The data will output something like this
-![alt text]("storage keys")
+![alt text](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/storage%20keys.JPG "storage keys")
 * Save the **key1** value
 
 8. To create a Hadoop HDInsight cluster:
@@ -57,3 +57,24 @@ azure hdinsight cluster create -g groupname -l location -y Linux --clusterType H
 * Replace **storagekey** with the **key1** value from the previous step
 * Replace **clustername**, **admin**, **httppassword**, **sshuser**, **sshuserpassword**, and **clustername** with unique values for each
 
+## Submit a Hive job script to the cluster
+1. Connect with SSH
+* For windows clients, download [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+ * Open PuTTYgen and click generate
+ ![alt text]("puttygen")
+ * Move the mouse over the blank area to create randomness
+ ![alt text]("puttygen2")
+ * Enter unique keyphrase and click save private key
+ ![alt text]("puttygen3")
+ * Open Putty
+  * In **category**, expand **Connection**, expand **SSH**, select **Auth**. Click **Browse** and find the .ppk file you just saved
+  ![alt text]("putty1")
+  * In **category**, select **Session** and enter the SSH address in the **Host Name** box.
+   > The SSH address is clustername-ssh.azurehdinsight.net where **clustername** is your unique name
+   ![alt text]("putty2")
+   * Click **Open** to connect
+   * Enter the username and password while creating the cluster when prompted
+2. Start the Hive CLI by entering
+```
+hive
+```
