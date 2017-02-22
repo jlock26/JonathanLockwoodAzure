@@ -10,7 +10,7 @@ script and execute it and transfer the results to a blob storage container. Fina
 [HDInsight](https://azure.microsoft.com/en-us/services/hdinsight/) is an open source Hadoop cloud service for big data analysis. A variety of development environments can be used to help obtain accurate models from the data.
 
 ### What is a Hive job?
-Hive is a data system for Hadoop which allows for data analysis to help structure big data. It can be run through a variety of different ways as seen in the table below. 
+Hive is a data system for Hadoop which allows for data analysis to help structure big data. It can be run through a number of different ways as seen in the table below. 
 
 #### How to run Hive job
 Method           | Cluster Operating System  |  Client Operating System |
@@ -21,7 +21,7 @@ Curl             | Linux, Windows            | Linux, Unix, Mac, Windows|
 Query Console    | Windows                   | Any                      |
 Visual Studio    | Linux, Windows            | Windows                  |
 Powershell       | Linux, Windows            | Windows                  |
-Remote Desktop   | Windows                   | Windwos                  |
+Remote Desktop   | Windows                   | Windows                  |
 
 
 ## Creating an HDInsight cluster
