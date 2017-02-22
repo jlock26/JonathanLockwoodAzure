@@ -95,7 +95,7 @@ script and execute it and transfer the results to a blob storage container. Fina
   > Note: this can be found at **example/data/sample.log** in the blob storage container
    
  * Using the CLI, create a new table called **log4jLogs**
-   * In case table exists, delete table and file
+   * Using **DROP TABLE**: In case table exists, delete table and file
     
     ```
      DROP TABLE log4jLogs;
@@ -105,7 +105,7 @@ script and execute it and transfer the results to a blob storage container. Fina
      ```
      CREATE EXTERNAL TABLE log4jLogs (t1 string, t2 string, t3 string, t4 string, t5 string, t6 string, t7 string)
      ```
-   * Communicate to Hive how rows are formatted. Use space as a delimiter
+   * Use **ROW FORMAT** to communicate to Hive how rows are formatted. Use space as a delimiter
     
      ```
      ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
