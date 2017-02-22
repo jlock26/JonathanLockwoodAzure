@@ -1,0 +1,54 @@
+C:\Users\Jonathan Lockwood>azure login
+info:    Executing command login
+\info:    To sign in, use a web browser to open the page https://aka.ms/devicelogin and enter the code BHB3W9KDK to authenticate.
+
+|info:    Added subscription Free Trial
++
+info:    login command OK
+
+C:\Users\Jonathan Lockwood>azure config mode arm
+info:    Executing command config mode
+info:    New mode is arm
+info:    config mode command OK
+
+C:\Users\Jonathan Lockwood>azure group create jonathanlockwoodgroup westus
+info:    Executing command group create
++ Getting resource group jonathanlockwoodgroup
++ Creating resource group jonathanlockwoodgroup
+info:    Created resource group jonathanlockwoodgroup
+data:    Id:                  /subscriptions/c93ef341-4cbb-4461-aa4a-bb880f5f6468/resourceGroups/jonathanlockwoodgroup
+data:    Name:                jonathanlockwoodgroup
+data:    Location:            westus
+data:    Provisioning State:  Succeeded
+data:    Tags: null
+data:
+info:    group create command OK
+
+C:\Users\Jonathan Lockwood>azure storage account create -g jonathanlockwoodgroup --sku-name RAGRS -l westus --kind Storage jonathanlockwoodstorage
+info:    Executing command storage account create
++ Checking availability of the storage account name
++ Creating storage account
+info:    storage account create command OK
+
+C:\Users\Jonathan Lockwood>azure storage account keys list -g jonathanlockwoodgroup jonathanlockwoodstorage
+info:    Executing command storage account keys list
++ Getting storage account keys
+data:    Name  Key                                                                                       Permissions
+data:    ----  ----------------------------------------------------------------------------------------  -----------
+data:    key1  gcKB+0sn3MXdCNFe14J7TiNxznVlAozY4Z9GqraXshz1WvNA1xY/f3ey0goaZjhYCNQPXv5v6u6wfZqpIMED6w==  Full
+data:    key2  0tJoK5Tf+Ez0y0ErKzjKsdmkClwAldUkOwKHgD63dZYg52UJwRFg7XZYyoEIqISfFHmbGQVMuq3gO14CWPoqIg==  Full
+info:    storage account keys list command OK
+
+
+C:\Users\Jonathan Lockwood>azure hdinsight cluster create -g jonathanlockwoodgroup -l westus -y Linux --clusterType Hadoop --defaultStorageAccountName jonathanlockwoodstorage.blob.core.windows.net --defaultStorageAccountKey gcKB+0sn3MXdCNFe14J7TiNxznVlAozY4Z9GqraXshz1WvNA1xY/f3ey0goaZjhYCNQPXv5v6u6wfZqpIMED6w== --defaultStorageContainer jonathanlockwoodcluster --workerNodeCount 2 --userName jlock26 --password Crater26! --sshUserName jlock26 --sshPassword Crater5 jonathanlockwoodcluster
+info:    Executing command hdinsight cluster create
+                                                                        + Submitting the request to create cluster...
+data:    Cluster ID  : undefined
+data:    Status      : undefined
+info:    hdinsight cluster create command OK
+
+C:\Users\Jonathan Lockwood>azure hdinsight cluster delete jonathanlockwoodcluster
+info:    Executing command hdinsight cluster delete
+Resource Group name:  jonathanlockwoodgroup
++ Deleting HDInsight Cluster
+info:    hdinsight cluster delete command OK
