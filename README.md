@@ -138,7 +138,25 @@ script and execute it and transfer the results to a blob storage container. Fina
      ```
    * To check output, ```SELECT * from errorLogs;``` should output 3 rows. 
 
-    ![](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/errorLogs.JPG "errorLogs")
+     ![](https://github.com/jlock26/JonathanLockwoodAzure/blob/master/errorLogs.JPG "errorLogs")
      
-
-
+## Transfer Hive results to blob storage
+ 1. To determine the location to transfer the results, in the Hive CLI write:
+ 
+   ```
+   INSERT OVERWRITE DIRECTORY 'wasb://containername@storagename.blob.core.windows.net/output'
+   ```
+    * Replace **containername** with the cluster name you came up with earlier
+    * Replace **storagename** with the unique storage name from earlier
+    
+         > Note: To point to an Azure blob storage, wasb:// or wasbs:// must be used for the uri
+         
+ 2. In the next line type:
+   ```
+   SELECT * from errorLogs;
+   ```
+   * This transfers the 3 row Hive result output to the desired location
+    
+     
+     
+    
